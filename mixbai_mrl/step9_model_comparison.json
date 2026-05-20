@@ -1,0 +1,181 @@
+{
+  "title": "Model Comparison: mxbai vs MPNet-MRL vs Nomic-MRL",
+  "dimensions": [
+    64,
+    128,
+    256,
+    512,
+    768,
+    1024
+  ],
+  "data": [
+    {
+      "dimension": 64,
+      "metric": "WEAT |ES|",
+      "MPNet_MRL": 0.6068488955497742,
+      "Nomic_MRL": 0.4703042209148407,
+      "mxbai_MRL": 1.0625
+    },
+    {
+      "dimension": 64,
+      "metric": "C(d) gender",
+      "MPNet_MRL": 0.13225050270557404,
+      "Nomic_MRL": 0.16412070393562317,
+      "mxbai_MRL": 0.07861328125
+    },
+    {
+      "dimension": 64,
+      "metric": "StereoSet SS",
+      "MPNet_MRL": 0.37274453941120606,
+      "Nomic_MRL": 0.36752136752136755,
+      "mxbai_MRL": 0.3717948717948718
+    },
+    {
+      "dimension": 64,
+      "metric": "CrowS CMS",
+      "MPNet_MRL": 46.81344148319815,
+      "Nomic_MRL": 50.05793742757822,
+      "mxbai_MRL": 47.27694090382387
+    },
+    {
+      "dimension": 128,
+      "metric": "WEAT |ES|",
+      "MPNet_MRL": 0.1508496254682541,
+      "Nomic_MRL": 0.2134173959493637,
+      "mxbai_MRL": 0.94873046875
+    },
+    {
+      "dimension": 128,
+      "metric": "C(d) gender",
+      "MPNet_MRL": 0.20685511827468872,
+      "Nomic_MRL": 0.2483045905828476,
+      "mxbai_MRL": 0.1376953125
+    },
+    {
+      "dimension": 128,
+      "metric": "StereoSet SS",
+      "MPNet_MRL": 0.3789173789173789,
+      "Nomic_MRL": 0.36657169990503324,
+      "mxbai_MRL": 0.34472934472934474
+    },
+    {
+      "dimension": 128,
+      "metric": "CrowS CMS",
+      "MPNet_MRL": 46.69756662804171,
+      "Nomic_MRL": 45.77056778679027,
+      "mxbai_MRL": 45.77056778679027
+    },
+    {
+      "dimension": 256,
+      "metric": "WEAT |ES|",
+      "MPNet_MRL": 0.22291912138462067,
+      "Nomic_MRL": 0.7884163856506348,
+      "mxbai_MRL": 0.84814453125
+    },
+    {
+      "dimension": 256,
+      "metric": "C(d) gender",
+      "MPNet_MRL": 0.36210739612579346,
+      "Nomic_MRL": 0.38889414072036743,
+      "mxbai_MRL": 0.2646484375
+    },
+    {
+      "dimension": 256,
+      "metric": "StereoSet SS",
+      "MPNet_MRL": 0.3969610636277303,
+      "Nomic_MRL": 0.3694207027540361,
+      "mxbai_MRL": 0.3238366571699905
+    },
+    {
+      "dimension": 256,
+      "metric": "CrowS CMS",
+      "MPNet_MRL": 45.538818076477405,
+      "Nomic_MRL": 45.07531865585168,
+      "mxbai_MRL": 44.61181923522596
+    },
+    {
+      "dimension": 512,
+      "metric": "WEAT |ES|",
+      "MPNet_MRL": 0.40532445907592773,
+      "Nomic_MRL": 0.5967702269554138,
+      "mxbai_MRL": 0.68310546875
+    },
+    {
+      "dimension": 512,
+      "metric": "C(d) gender",
+      "MPNet_MRL": 0.7161771655082703,
+      "Nomic_MRL": 0.6605784296989441,
+      "mxbai_MRL": 0.5205078125
+    },
+    {
+      "dimension": 512,
+      "metric": "StereoSet SS",
+      "MPNet_MRL": 0.4083570750237417,
+      "Nomic_MRL": 0.38746438746438744,
+      "mxbai_MRL": 0.3157644824311491
+    },
+    {
+      "dimension": 512,
+      "metric": "CrowS CMS",
+      "MPNet_MRL": 45.19119351100811,
+      "Nomic_MRL": 45.07531865585168,
+      "mxbai_MRL": 40.78794901506373
+    },
+    {
+      "dimension": 1024,
+      "metric": "WEAT |ES|",
+      "MPNet_MRL": 0.5759146213531494,
+      "Nomic_MRL": 0.3872978985309601,
+      "mxbai_MRL": 0.55859375
+    },
+    {
+      "dimension": 1024,
+      "metric": "C(d) gender",
+      "MPNet_MRL": 1.0,
+      "Nomic_MRL": 1.0,
+      "mxbai_MRL": 1.0
+    },
+    {
+      "dimension": 1024,
+      "metric": "StereoSet SS",
+      "MPNet_MRL": 0.4083570750237417,
+      "Nomic_MRL": 0.3741690408357075,
+      "mxbai_MRL": 0.32051282051282054
+    },
+    {
+      "dimension": 1024,
+      "metric": "CrowS CMS",
+      "MPNet_MRL": 44.727694090382386,
+      "Nomic_MRL": 46.00231749710313,
+      "mxbai_MRL": 40.20857473928158
+    },
+    {
+      "dimension": 1024,
+      "metric": "WEAT |ES|",
+      "MPNet_MRL": null,
+      "Nomic_MRL": null,
+      "mxbai_MRL": 0.55859375
+    },
+    {
+      "dimension": 1024,
+      "metric": "C(d) gender",
+      "MPNet_MRL": null,
+      "Nomic_MRL": null,
+      "mxbai_MRL": 1.0
+    },
+    {
+      "dimension": 1024,
+      "metric": "StereoSet SS",
+      "MPNet_MRL": null,
+      "Nomic_MRL": null,
+      "mxbai_MRL": 0.32051282051282054
+    },
+    {
+      "dimension": 1024,
+      "metric": "CrowS CMS",
+      "MPNet_MRL": null,
+      "Nomic_MRL": null,
+      "mxbai_MRL": 40.20857473928158
+    }
+  ]
+}
