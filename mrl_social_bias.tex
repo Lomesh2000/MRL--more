@@ -127,6 +127,14 @@ Figure~\ref{fig:bias-analysis} provides the bias-analysis visualization tied to 
 
 \subsection{RQ3: Confidence-interval JSON evidence}
 Table~\ref{tab:cvar-ci} adds uncertainty-backed results using \texttt{cvar\_new/step13b\_cvar\_results\_with\_ci.json}. At $d=64$, geometric concentration and expressed variance already diverge across models, with bootstrap CIs quantifying uncertainty.
+Figure~\ref{fig:rq3-correlation-dynamic} further visualizes this relationship by plotting the dynamic correlation between geometric concentration and variance concentration across prefixes. The plot shows that the two quantities are related but not interchangeable: several prefixes deviate from a one-to-one coupling, which is consistent with $\alpha(d)\neq1$. This reinforces the main RQ3 insight that concentration in the bias direction can increase without a proportional increase in expressed variance.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{correlation_rq3_dynamic_step7.png}
+\caption{Dynamic correlation view for RQ3 across prefix dimensions, comparing geometric concentration and variance expression behavior.}
+\label{fig:rq3-correlation-dynamic}
+\end{figure}
 
 \begin{table}[t]
 \caption{Bootstrap CI summary for $C_{var}(d)$ at the smallest prefix dimension ($d=64$) from frozen JSON (RQ3).}
