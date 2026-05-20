@@ -91,6 +91,40 @@ Qwen3-4B-MRL & 64/128/256/512/1024/2560 & 1.064 & 1.459 (512) & 1.175 \\
 \subsection{RQ1 statistical validation: WEAT significance tests}
 Permutation significance testing is implemented in the WEAT pipeline (\texttt{step3\_weat.py}; two-tailed permutation test, $N{=}10{,}000$ permutations). In this submission, to keep evidence strictly tied to frozen JSON artifacts, we report WEAT effect-size trajectories and treat permutation significance as protocol-supported but non-canonical evidence.
 
+\subsection{RQ1 benchmark plots: SEAT, StereoSet, and CrowS-Pairs}
+In addition to WEAT trends, benchmark visual summaries for SEAT, StereoSet, and CrowS-Pairs are included in Figures~\ref{fig:seat}, \ref{fig:stereoset}, and \ref{fig:crowspairs} to align the RQ1 narrative with the generated repository artifacts.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{seat_results_step5.png}
+\caption{SEAT plot.}
+\label{fig:seat}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{stereoset_fixed_step5.png}
+\caption{StereoSet plot.}
+\label{fig:stereoset}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{crowspairs_final_step6.png}
+\caption{CrowS-Pairs plot.}
+\label{fig:crowspairs}
+\end{figure}
+
+\subsection{RQ2: Geometric concentration visualization}
+Figure~\ref{fig:bias-analysis} provides the bias-analysis visualization tied to the geometric concentration view in RQ2.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{bias_analysis_step4.png}
+\caption{Bias analysis plot.}
+\label{fig:bias-analysis}
+\end{figure}
+
 \subsection{RQ3: Confidence-interval JSON evidence}
 Table~\ref{tab:cvar-ci} adds uncertainty-backed results using \texttt{cvar\_new/step13b\_cvar\_results\_with\_ci.json}. At $d{=}64$, geometric concentration and expressed variance already diverge across models, with bootstrap CIs quantifying uncertainty.
 
@@ -132,35 +166,6 @@ Qwen3-4B-MRL & 0.774 & 256 \\
 \bottomrule
 \end{tabular}
 \end{table}
-
-\subsection{Requested benchmark plots}
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{bias_analysis_step4.png}
-\caption{Bias analysis plot.}
-\label{fig:bias-analysis}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{crowspairs_final_step6.png}
-\caption{CrowS-Pairs plot.}
-\label{fig:crowspairs}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{seat_results_step5.png}
-\caption{SEAT plot.}
-\label{fig:seat}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{stereoset_fixed_step5.png}
-\caption{StereoSet plot.}
-\label{fig:stereoset}
-\end{figure}
 
 \section{Discussion}
 The key measurement insight is that geometric and statistical views diverge under MRL truncation. Therefore, fairness claims based only on geometric concentration or only on one benchmark score are incomplete. For deployment, dimension-adaptive systems should consider both concentration and expression when selecting truncation points.
