@@ -88,7 +88,7 @@ Qwen3-4B-MRL & 64/128/256/512/1024/2560 & 1.064 & 1.459 (512) & 1.175 \\
 \end{tabular}
 \end{table*}
 
-\subsection{RQ2: WEAT significance tests}
+\subsection{RQ1 statistical validation: WEAT significance tests}
 Permutation significance testing is implemented in the WEAT pipeline (\texttt{step3\_weat.py}; two-tailed permutation test, $N{=}10{,}000$ permutations). In this submission, to keep evidence strictly tied to frozen JSON artifacts, we report WEAT effect-size trajectories and treat permutation significance as protocol-supported but non-canonical evidence.
 
 \subsection{RQ3: Confidence-interval JSON evidence}
@@ -160,6 +160,7 @@ Layer 3 & Variance + anisotropy contribution & \texttt{cvar\_new/step13b\_cvar\_
 \end{table*}
 
 \section*{Figure and Table Placement Plan}
+Figure assets are generated in the repository and will be inserted next (current draft prioritizes ordered RQ text and tables first).
 \begin{itemize}
     \item \textbf{Fig. 1 (main):} MPNet Standard vs MPNet-MRL prefix bias overview.
     \item \textbf{Fig. 2 (main):} Cross-model $C(d)$ comparison.
