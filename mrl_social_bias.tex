@@ -133,6 +133,35 @@ Qwen3-4B-MRL & 0.774 & 256 \\
 \end{tabular}
 \end{table}
 
+\subsection{Requested benchmark plots}
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{bias_analysis_step4.png}
+\caption{Bias analysis plot.}
+\label{fig:bias-analysis}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{crowspairs_final_step6.png}
+\caption{CrowS-Pairs plot.}
+\label{fig:crowspairs}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{seat_results_step5.png}
+\caption{SEAT plot.}
+\label{fig:seat}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{stereoset_fixed_step5.png}
+\caption{StereoSet plot.}
+\label{fig:stereoset}
+\end{figure}
+
 \section{Discussion}
 The key measurement insight is that geometric and statistical views diverge under MRL truncation. Therefore, fairness claims based only on geometric concentration or only on one benchmark score are incomplete. For deployment, dimension-adaptive systems should consider both concentration and expression when selecting truncation points.
 
@@ -158,18 +187,6 @@ Layer 3 & Variance + anisotropy contribution & \texttt{cvar\_new/step13b\_cvar\_
 \bottomrule
 \end{tabular}
 \end{table*}
-
-\section*{Figure and Table Placement Plan}
-Figure assets are generated in the repository and will be inserted next (current draft prioritizes ordered RQ text and tables first).
-\begin{itemize}
-    \item \textbf{Fig. 1 (main):} MPNet Standard vs MPNet-MRL prefix bias overview.
-    \item \textbf{Fig. 2 (main):} Cross-model $C(d)$ comparison.
-    \item \textbf{Fig. 3 (main):} $C_{var}(d)$ with bootstrap CIs.
-    \item \textbf{Fig. 4 (main):} $\alpha(d)$ curves (headline figure).
-    \item \textbf{Tab. 1 (main):} Model and dimension protocol.
-    \item \textbf{Tab. 2 (main):} Compact metric summary across models.
-    \item \textbf{Tab. 3 (main):} $\alpha$ minima and dimensions (Table~\ref{tab:alpha-summary}).
-\end{itemize}
 
 \section*{Appendix Plan}
 \begin{itemize}
