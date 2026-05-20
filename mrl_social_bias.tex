@@ -36,7 +36,7 @@ MRL embeddings are designed for prefix truncation while preserving task utility,
 This study connects prior work on: (i) word/sentence embedding bias tests (WEAT, SEAT), (ii) benchmark-based stereotype preference (StereoSet, CrowS-Pairs), and (iii) anisotropy and representation geometry in high-dimensional embedding spaces. It also extends MRL evaluation from utility-centric analysis to fairness-aware dimension-wise analysis.
 
 \section{Problem Setup and Metrics}
-Let $f^{(d)}(x)$ denote the first $d$ dimensions of embedding $f(x)$, and let $v$ be a full-dimension bias direction estimated from attribute groups (e.g., male vs female).
+Let $f^{(d)}(x)$ denote the first $d$ dimensions of embedding $f(x)$, where $D$ is the full embedding dimension and $d\leq D$. Let $v$ be a full-dimension, unit-normalized bias direction ($\|v\|=1$) estimated from attribute groups (e.g., male vs female).
 
 \subsection{Standard Metrics (RQ1)}
 WEAT, SEAT, StereoSet, and CrowS-Pairs are computed across tested dimensions per model.
@@ -57,6 +57,7 @@ with bootstrap confidence intervals.
 \alpha(d)=\frac{C_{var}(d)}{\|v_{1:d}\|^2}
 \end{equation}
 Interpretation: $\alpha=1$ isotropic expression, $\alpha<1$ underexpression, $\alpha>1$ overexpression.
+Because $\|v\|=1$, the term $\|v_{1:d}\|^2$ is the geometric share of bias-direction energy in the prefix. Therefore, $\alpha(d)=1$ means observed variance concentration exactly matches this geometric expectation (isotropic expression), while $\alpha(d)<1$ indicates suppressed variance expression relative to geometry.
 
 \section{Experimental Setup}
 \textbf{Models.} MPNet-Standard, MPNet-MRL, Nomic-MRL, mxbai-MRL, Qwen3-0.6B-MRL, Qwen3-4B-MRL.\\
