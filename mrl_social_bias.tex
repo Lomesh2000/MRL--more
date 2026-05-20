@@ -1,0 +1,224 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{url}
+
+\title{Bias Concentration Is Not Bias Expression:\\A Prefix-Dimension Study of Matryoshka Representation Learning Embeddings}
+
+\author{\IEEEauthorblockN{Anonymous Authors}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Matryoshka Representation Learning (MRL) enables dynamic prefix truncation of embedding vectors, but its social-bias behavior across prefix dimensions remains underexplored. We study gender bias as the primary axis (with race as exploratory evidence) across MPNet-Standard, MPNet-MRL, Nomic-MRL, mxbai-MRL, Qwen3-0.6B-MRL, and Qwen3-4B-MRL. We evaluate standard bias metrics across dimensions (WEAT, SEAT, StereoSet, CrowS-Pairs) and geometric concentration $C(d)$, then add a variance-based view $C_{var}(d)$ with bootstrap confidence intervals. We further define the anisotropy factor $\alpha(d)=C_{var}(d)/\|v_{1:d}\|^2$ to separate geometric bias mass from statistically expressed bias variance. The key finding is that early dimensions can appear bias-concentrated geometrically while simultaneously underexpressing bias variance ($\alpha(d)<1$), implying that concentration and expression are not equivalent. This provides a clearer measurement framework for fairness analysis in dimension-adaptive retrieval systems.
+\end{abstract}
+
+\begin{IEEEkeywords}
+matryoshka representation learning, embedding bias, fairness, anisotropy, dimensional truncation, social bias
+\end{IEEEkeywords}
+
+\section{Introduction}
+MRL embeddings are designed for prefix truncation while preserving task utility, making them attractive for latency-sensitive retrieval. However, social bias under truncation is insufficiently characterized. Existing bias analyses usually inspect full-dimension embeddings or metric trends without separating geometric concentration from variance expression. This work targets that gap.
+
+\textbf{Central claim.} Bias concentration in early dimensions is not the same as bias expression in early dimensions. In MRL models, geometric bias mass may be front-loaded while expressed variance is suppressed.
+
+\textbf{Scope.} Gender bias is the primary analysis axis. Race is included only as secondary/exploratory evidence from earlier-stage metrics.
+
+\section{Research Questions}
+\textbf{RQ1:} How do standard bias metrics change as prefix dimension shrinks in MRL embeddings?\\
+\textbf{RQ2:} Is bias geometrically concentrated in early dimensions?\\
+\textbf{RQ3:} Is geometric concentration actually expressed as statistical variance, or suppressed by anisotropy/covariance structure?\\
+\textbf{RQ4:} Do the RQ1--RQ3 trends remain consistent across multiple MRL model families?
+
+\section{Related Work}
+This study connects prior work on: (i) word/sentence embedding bias tests (WEAT, SEAT), (ii) benchmark-based stereotype preference (StereoSet, CrowS-Pairs), and (iii) anisotropy and representation geometry in high-dimensional embedding spaces. It also extends MRL evaluation from utility-centric analysis to fairness-aware dimension-wise analysis.
+
+\section{Problem Setup and Metrics}
+Let $f^{(d)}(x)$ denote the first $d$ dimensions of embedding $f(x)$, where $D$ is the full embedding dimension and $d\leq D$. Let $v$ be a full-dimension, unit-normalized bias direction ($\|v\|=1$) estimated from attribute groups (e.g., male vs female).
+
+\subsection{Standard Metrics (RQ1)}
+WEAT, SEAT, StereoSet, and CrowS-Pairs are computed across tested dimensions per model.
+
+\subsection{Geometric Concentration (RQ2)}
+\begin{equation}
+C(d)=\frac{\|v_{1:d}\|^2}{\|v\|^2}
+\end{equation}
+where $v_{1:d}$ is the prefix of $v$.
+
+\subsection{Variance Concentration and Anisotropy (RQ3)}
+\begin{equation}
+C_{var}(d)=\frac{\mathrm{Var}(\langle f^{(d)}(x),v_{1:d}\rangle)}{\mathrm{Var}(\langle f^{(D)}(x),v\rangle)}
+\end{equation}
+with bootstrap confidence intervals.
+
+\begin{equation}
+\alpha(d)=\frac{C_{var}(d)}{\|v_{1:d}\|^2}
+\end{equation}
+Interpretation: $\alpha=1$ isotropic expression, $\alpha<1$ underexpression, $\alpha>1$ overexpression.
+Because $\|v\|=1$, the term $\|v_{1:d}\|^2$ is the geometric share of bias-direction energy in the prefix. Therefore, $\alpha(d)=1$ means observed variance concentration exactly matches this geometric expectation (isotropic expression), while $\alpha(d)<1$ indicates suppressed variance expression relative to geometry.
+
+\section{Experimental Setup}
+\textbf{Models.} MPNet-Standard, MPNet-MRL, Nomic-MRL, mxbai-MRL, Qwen3-0.6B-MRL, Qwen3-4B-MRL.\\
+\textbf{Dimensions.} Model-specific Matryoshka prefixes (e.g., 64/128/256/512/768 for 768-d models; 64/128/256/512/1024 for 1024-d models; plus 2560 for Qwen3-4B).\\
+\textbf{Uncertainty.} Bootstrap CIs for $C_{var}(d)$ and induced CIs for $\alpha(d)$.\\
+\textbf{Reproducibility.} Canonical evidence is frozen to generated JSON/plot artifacts listed in Section~\ref{sec:evidence}.
+
+\section{Results}
+\subsection{RQ1: WEAT results first (prefix trends)}
+Table~\ref{tab:weat-summary} reports frozen WEAT absolute effect-size trends from the canonical JSON artifacts. Bias does not vanish under truncation, and several MRL models show strongest WEAT magnitudes in early or mid prefixes rather than only at full dimension.
+
+\begin{table*}[t]
+\caption{WEAT absolute effect-size summary from frozen JSON artifacts (RQ1).}
+\label{tab:weat-summary}
+\centering
+\begin{tabular}{lcccc}
+\toprule
+Model & Prefix set & $|$WEAT$|$ at smallest $d$ & Peak $|$WEAT$|$ (dimension) & $|$WEAT$|$ at full $D$ \\
+\midrule
+MPNet-Standard & 64/128/256/512/768 & 0.751 & 1.044 (128) & 0.509 \\
+MPNet-MRL & 64/128/256/512/768 & 0.607 & 0.607 (64) & 0.576 \\
+Nomic-MRL & 64/128/256/512/768 & 0.470 & 0.788 (256) & 0.387 \\
+mxbai-MRL & 64/128/256/512/1024 & 1.062 & 1.062 (64) & 0.559 \\
+Qwen3-0.6B-MRL & 64/128/256/512/1024 & 1.042 & 1.143 (128) & 0.832 \\
+Qwen3-4B-MRL & 64/128/256/512/1024/2560 & 1.064 & 1.459 (512) & 1.175 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{RQ1 statistical validation: WEAT significance tests}
+Permutation significance testing is implemented in the WEAT pipeline (\texttt{step3\_weat.py}; two-tailed permutation test, $N=10,000$ permutations). In this submission, to keep evidence strictly tied to frozen JSON artifacts, we report WEAT effect-size trajectories and treat permutation significance as protocol-supported but non-canonical evidence.
+
+\subsection{RQ1 benchmark plots: SEAT, StereoSet, and CrowS-Pairs}
+In addition to WEAT trends, benchmark visual summaries for SEAT, StereoSet, and CrowS-Pairs are included in Figures~\ref{fig:seat}, \ref{fig:stereoset}, and \ref{fig:crowspairs} to align the RQ1 narrative with the generated repository artifacts.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{seat_results_step5.png}
+\caption{SEAT bias results across prefix dimensions.}
+\label{fig:seat}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{stereoset_fixed_step5.png}
+\caption{StereoSet bias results across prefix dimensions.}
+\label{fig:stereoset}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{crowspairs_final_step6.png}
+\caption{CrowS-Pairs bias results across prefix dimensions.}
+\label{fig:crowspairs}
+\end{figure}
+
+\subsection{RQ2: Geometric concentration visualization}
+Figure~\ref{fig:bias-analysis} provides the bias-analysis visualization tied to the geometric concentration view in RQ2.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{bias_analysis_step4.png}
+\caption{Geometric concentration bias analysis across prefix dimensions.}
+\label{fig:bias-analysis}
+\end{figure}
+
+\subsection{RQ3: Confidence-interval JSON evidence}
+Table~\ref{tab:cvar-ci} adds uncertainty-backed results using \texttt{cvar\_new/step13b\_cvar\_results\_with\_ci.json}. At $d=64$, geometric concentration and expressed variance already diverge across models, with bootstrap CIs quantifying uncertainty.
+Figure~\ref{fig:rq3-correlation-dynamic} further visualizes this relationship by plotting the dynamic correlation between geometric concentration and variance concentration across prefixes. The two quantities are related but not interchangeable, as several prefixes deviate from a one-to-one coupling, consistent with $\alpha(d)\neq1$. This reinforces the main RQ3 insight that concentration in the bias direction can increase without a proportional increase in expressed variance. The \texttt{step7} filename is kept intentionally to preserve reproducibility traceability with the pipeline artifact naming.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{correlation_rq3_dynamic_step7.png}
+\caption{Dynamic correlation view for RQ3 across prefix dimensions, comparing geometric concentration and variance expression behavior.}
+\label{fig:rq3-correlation-dynamic}
+\end{figure}
+
+\begin{table}[t]
+\caption{Bootstrap CI summary for $C_{var}(d)$ at the smallest prefix dimension ($d=64$) from frozen JSON (RQ3).}
+\label{tab:cvar-ci}
+\centering
+\begin{tabular}{lcc}
+\toprule
+Model & $C_{var}(64)$ & 95\% CI \\
+\midrule
+MPNet-Standard & 0.0769 & [0.0466, 0.1245] \\
+MPNet-MRL & 0.0699 & [0.0511, 0.0948] \\
+Nomic-MRL & 0.1079 & [0.0732, 0.1550] \\
+mxbai-MRL & 0.0648 & [0.0439, 0.0979] \\
+Qwen3-0.6B-MRL & 0.0808 & [0.0725, 0.0880] \\
+Qwen3-4B-MRL & 0.2263 & [0.1954, 0.2579] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{RQ4: Cross-model robustness via anisotropy}
+$\alpha(d)$ trends in Table~\ref{tab:alpha-summary} show robust cross-model divergence between geometric concentration and expressed variance. MPNet-Standard stays near isotropic, several MRL models show early underexpression ($\alpha<1$), and mxbai-MRL is closer to isotropic behavior.
+
+\begin{table}[t]
+\caption{Anisotropy summary from frozen artifact \texttt{step13d\_alpha\_results.json} (gender axis).}
+\label{tab:alpha-summary}
+\centering
+\begin{tabular}{lcc}
+\toprule
+Model & $\min\,\alpha(d)$ & Dimension \\
+\midrule
+MPNet-Standard & 0.727 & 256 \\
+MPNet-MRL & 0.429 & 128 \\
+Nomic-MRL & 0.553 & 128 \\
+mxbai-MRL & 0.820 & 512 \\
+Qwen3-0.6B-MRL & 0.358 & 64 \\
+Qwen3-4B-MRL & 0.774 & 256 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Discussion}
+The key measurement insight is that geometric and statistical views diverge under MRL truncation. Therefore, fairness claims based only on geometric concentration or only on one benchmark score are incomplete. For deployment, dimension-adaptive systems should consider both concentration and expression when selecting truncation points.
+
+\section{Limitations and Ethics}
+This version is gender-primary and English-centric. Race findings remain exploratory in this submission because the full $C_{var}/\alpha$ pipeline was not replicated for race. Benchmark artifacts and lexical choices may encode historical harms; results should be interpreted as measurement outcomes, not normative statements.
+
+\section{Conclusion}
+MRL changes not only \emph{where} bias energy sits in vector space but also \emph{how strongly} that bias is statistically expressed across dimensions. The anisotropy factor $\alpha(d)$ provides a practical bridge between geometric intuition and variance-based fairness analysis.
+
+\section{Canonical Evidence Map}
+\label{sec:evidence}
+Paths below are literal repository paths (legacy folder names preserved as-is).
+\begin{table*}[t]
+\caption{Frozen evidence artifacts used for paper claims.}
+\centering
+\begin{tabular}{lll}
+\toprule
+Layer & Purpose & Artifact paths (repository-relative) \\
+\midrule
+Layer 1 & MPNet baseline scripts & \texttt{step3\_weat.py}, \texttt{step4\_subspace.py}, \texttt{step5\_seat.py} \\
+--- & Benchmark scripts & \texttt{step5\_stereoset\_v2.py}, \texttt{step6\_crowspairs\_new.py} \\
+--- & Frozen summary output & \texttt{step7\_all\_results.json} \\
+Layer 2 & Cross-model generalization & \texttt{nomic/step8\_nomic\_results.json}, \texttt{mixbai\_mrl/step9\_mxbai\_results.json} \\
+--- & Additional cross-model artifacts & \texttt{qwen\_0.6\_emb.py/step10\_qwen3\_results.json}, \texttt{qwen-3b/step11\_qwen3\_4b\_results.json} \\
+Layer 3 & Variance + anisotropy results & \texttt{cvar\_new/step13b\_cvar\_results\_with\_ci.json}, \texttt{step13d\_alpha\_results.json} \\
+--- & Plot-generation scripts & \texttt{cvar\_new/Publication\_Quality\_C\_var(d)\_Plot\_with\_Bootstrap\_CIs.py}, \texttt{anistropy\_plots.py} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\section*{Appendix Plan}
+\begin{itemize}
+    \item Additional WEAT variants and full per-dimension score tables.
+    \item StereoSet/CrowS detailed tables.
+    \item Exploratory race analysis from early-layer metrics.
+    \item Additional generated plots not selected for the main narrative.
+\end{itemize}
+
+\begin{thebibliography}{00}
+\bibitem{caliskan2017} A.~Caliskan, J.~J. Bryson, and A.~Narayanan, ``Semantics derived automatically from language corpora contain human-like biases,'' \emph{Science}, 2017.
+\bibitem{may2019} C.~May, A.~Wang, S.~Bordia, S.~Bowman, and R.~Rudinger, ``On measuring social biases in sentence encoders,'' \emph{NAACL}, 2019.
+\bibitem{nangia2020} N.~Nangia, C.~Vania, R.~Bhalerao, and S.~R. Bowman, ``CrowS-Pairs: A challenge dataset for measuring social biases in masked language models,'' \emph{EMNLP}, 2020.
+\bibitem{nadeem2021} M.~Nadeem, A.~Bethke, and S.~Reddy, ``StereoSet: Measuring stereotypical bias in pretrained language models,'' \emph{ACL}, 2021.
+\bibitem{kusupati2022} A.~Kusupati et al., ``Matryoshka representation learning,'' \emph{NeurIPS}, 2022.
+\end{thebibliography}
+
+\end{document}
