@@ -89,7 +89,7 @@ Qwen3-4B-MRL & 64/128/256/512/1024/2560 & 1.064 & 1.459 (512) & 1.175 \\
 \end{table*}
 
 \subsection{RQ1 statistical validation: WEAT significance tests}
-Permutation significance testing is implemented in the WEAT pipeline (\texttt{step3\_weat.py}; two-tailed permutation test, $N{=}10{,}000$ permutations). In this submission, to keep evidence strictly tied to frozen JSON artifacts, we report WEAT effect-size trajectories and treat permutation significance as protocol-supported but non-canonical evidence.
+Permutation significance testing is implemented in the WEAT pipeline (\texttt{step3\_weat.py}; two-tailed permutation test, $N=10{,}000$ permutations). In this submission, to keep evidence strictly tied to frozen JSON artifacts, we report WEAT effect-size trajectories and treat permutation significance as protocol-supported but non-canonical evidence.
 
 \subsection{RQ1 benchmark plots: SEAT, StereoSet, and CrowS-Pairs}
 In addition to WEAT trends, benchmark visual summaries for SEAT, StereoSet, and CrowS-Pairs are included in Figures~\ref{fig:seat}, \ref{fig:stereoset}, and \ref{fig:crowspairs} to align the RQ1 narrative with the generated repository artifacts.
@@ -126,10 +126,10 @@ Figure~\ref{fig:bias-analysis} provides the bias-analysis visualization tied to 
 \end{figure}
 
 \subsection{RQ3: Confidence-interval JSON evidence}
-Table~\ref{tab:cvar-ci} adds uncertainty-backed results using \texttt{cvar\_new/step13b\_cvar\_results\_with\_ci.json}. At $d{=}64$, geometric concentration and expressed variance already diverge across models, with bootstrap CIs quantifying uncertainty.
+Table~\ref{tab:cvar-ci} adds uncertainty-backed results using \texttt{cvar\_new/step13b\_cvar\_results\_with\_ci.json}. At $d=64$, geometric concentration and expressed variance already diverge across models, with bootstrap CIs quantifying uncertainty.
 
 \begin{table}[t]
-\caption{Bootstrap CI summary for $C_{var}(d)$ at the smallest prefix dimension ($d{=}64$) from frozen JSON (RQ3).}
+\caption{Bootstrap CI summary for $C_{var}(d)$ at the smallest prefix dimension ($d=64$) from frozen JSON (RQ3).}
 \label{tab:cvar-ci}
 \centering
 \begin{tabular}{lcc}
