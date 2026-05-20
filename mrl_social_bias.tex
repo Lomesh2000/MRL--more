@@ -186,9 +186,12 @@ Paths below are literal repository paths (legacy folder names preserved as-is).
 \toprule
 Layer & Purpose & Artifact paths (repository-relative) \\
 \midrule
-Layer 1 & MPNet baseline metrics + $C(d)$ & \texttt{step3\_weat.py}, \texttt{step4\_subspace.py}, \texttt{step5\_seat.py}, \texttt{step5\_stereoset\_v2.py}, \texttt{step6\_crowspairs\_new.py}, \texttt{step7\_all\_results.json} \\
-Layer 2 & Cross-model generalization & \texttt{nomic/step8\_nomic\_results.json}, \texttt{mixbai\_mrl/step9\_mxbai\_results.json} (mxbai model), \texttt{qwen\_0.6\_emb.py/step10\_qwen3\_results.json} (Qwen3-0.6B folder), \texttt{qwen-3b/step11\_qwen3\_4b\_results.json} \\
-Layer 3 & Variance + anisotropy contribution & \texttt{cvar\_new/step13b\_cvar\_results\_with\_ci.json}, \texttt{step13d\_alpha\_results.json}, \texttt{cvar\_new/Publication\_Quality\_C\_var(d)\_Plot\_with\_Bootstrap\_CIs.py}, \texttt{anistropy\_plots.py} \\
+Layer 1 & MPNet baseline metrics & \texttt{step3\_weat.py}, \texttt{step4\_subspace.py}, \texttt{step5\_seat.py} \\
+--- & Benchmark artifact generation & \texttt{step5\_stereoset\_v2.py}, \texttt{step6\_crowspairs\_new.py}, \texttt{step7\_all\_results.json} \\
+Layer 2 & Cross-model generalization & \texttt{nomic/step8\_nomic\_results.json}, \texttt{mixbai\_mrl/step9\_mxbai\_results.json} \\
+--- & Additional cross-model artifacts & \texttt{qwen\_0.6\_emb.py/step10\_qwen3\_results.json}, \texttt{qwen-3b/step11\_qwen3\_4b\_results.json} \\
+Layer 3 & Variance + anisotropy results & \texttt{cvar\_new/step13b\_cvar\_results\_with\_ci.json}, \texttt{step13d\_alpha\_results.json} \\
+--- & Plot-generation scripts & \texttt{cvar\_new/Publication\_Quality\_C\_var(d)\_Plot\_with\_Bootstrap\_CIs.py}, \texttt{anistropy\_plots.py} \\
 \bottomrule
 \end{tabular}
 \end{table*}
