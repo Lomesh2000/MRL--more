@@ -89,7 +89,7 @@ Qwen3-4B-MRL & 64/128/256/512/1024/2560 & 1.064 & 1.459 (512) & 1.175 \\
 \end{table*}
 
 \subsection{RQ2: WEAT significance tests}
-Permutation significance testing is implemented in the WEAT pipeline (\texttt{step3\_weat.py}; two-tailed permutation test, $N{=}10{,}000$ permutations). The frozen paper evidence currently preserves WEAT effect-size trajectories in JSON; significance values from WEAT runs should be reported in the final camera-ready table from archived run logs or a dedicated significance JSON export.
+Permutation significance testing is implemented in the WEAT pipeline (\texttt{step3\_weat.py}; two-tailed permutation test, $N{=}10{,}000$ permutations). In this submission, to keep evidence strictly tied to frozen JSON artifacts, we report WEAT effect-size trajectories and treat permutation significance as protocol-supported but non-canonical evidence.
 
 \subsection{RQ3: Confidence-interval JSON evidence}
 Table~\ref{tab:cvar-ci} adds uncertainty-backed results using \texttt{cvar\_new/step13b\_cvar\_results\_with\_ci.json}. At $d{=}64$, geometric concentration and expressed variance already diverge across models, with bootstrap CIs quantifying uncertainty.
@@ -137,7 +137,7 @@ Qwen3-4B-MRL & 0.774 & 256 \\
 The key measurement insight is that geometric and statistical views diverge under MRL truncation. Therefore, fairness claims based only on geometric concentration or only on one benchmark score are incomplete. For deployment, dimension-adaptive systems should consider both concentration and expression when selecting truncation points.
 
 \section{Limitations and Ethics}
-This version is gender-primary and English-centric. Race findings are exploratory unless the full $C_{var}/\alpha$ pipeline is replicated for race (and ideally additional social axes). Benchmark artifacts and lexical choices may encode historical harms; results should be interpreted as measurement outcomes, not normative statements.
+This version is gender-primary and English-centric. Race findings remain exploratory in this submission because the full $C_{var}/\alpha$ pipeline was not replicated for race. Benchmark artifacts and lexical choices may encode historical harms; results should be interpreted as measurement outcomes, not normative statements.
 
 \section{Conclusion}
 MRL changes not only \emph{where} bias energy sits in vector space but also \emph{how strongly} that bias is statistically expressed across dimensions. The anisotropy factor $\alpha(d)$ provides a practical bridge between geometric intuition and variance-based fairness analysis.
