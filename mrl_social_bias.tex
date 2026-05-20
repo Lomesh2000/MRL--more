@@ -30,7 +30,8 @@ MRL embeddings are designed for prefix truncation while preserving task utility,
 \section{Research Questions}
 \textbf{RQ1:} How do standard bias metrics change as prefix dimension shrinks in MRL embeddings?\\
 \textbf{RQ2:} Is bias geometrically concentrated in early dimensions?\\
-\textbf{RQ3:} Is geometric concentration actually expressed as statistical variance, or suppressed by anisotropy/covariance structure?
+\textbf{RQ3:} Is geometric concentration actually expressed as statistical variance, or suppressed by anisotropy/covariance structure?\\
+\textbf{RQ4:} Do the RQ1--RQ3 trends remain consistent across multiple MRL model families?
 
 \section{Related Work}
 This study connects prior work on: (i) word/sentence embedding bias tests (WEAT, SEAT), (ii) benchmark-based stereotype preference (StereoSet, CrowS-Pairs), and (iii) anisotropy and representation geometry in high-dimensional embedding spaces. It also extends MRL evaluation from utility-centric analysis to fairness-aware dimension-wise analysis.
@@ -66,14 +67,53 @@ Because $\|v\|=1$, the term $\|v_{1:d}\|^2$ is the geometric share of bias-direc
 \textbf{Reproducibility.} Canonical evidence is frozen to generated JSON/plot artifacts listed in Section~\ref{sec:evidence}.
 
 \section{Results}
-\subsection{Layer 1: MPNet baseline (RQ1--RQ2)}
-MPNet-Standard and MPNet-MRL show dimension-dependent shifts in WEAT/SEAT/StereoSet/CrowS and geometric concentration $C(d)$.
+\subsection{RQ1: WEAT results first (prefix trends)}
+Table~\ref{tab:weat-summary} reports frozen WEAT absolute effect-size trends from the canonical JSON artifacts. Bias does not vanish under truncation, and several MRL models show strongest WEAT magnitudes in early or mid prefixes rather than only at full dimension.
 
-\subsection{Layer 2: Cross-model generalization}
-Nomic-MRL, mxbai-MRL, and Qwen variants validate that dimension-wise bias behavior is model-dependent but nontrivial across architectures/scales.
+\begin{table*}[t]
+\caption{WEAT absolute effect-size summary from frozen JSON artifacts (RQ1).}
+\label{tab:weat-summary}
+\centering
+\begin{tabular}{lcccc}
+\toprule
+Model & Prefix set & $|$WEAT$|$ at smallest $d$ & Peak $|$WEAT$|$ (dimension) & $|$WEAT$|$ at full $D$ \\
+\midrule
+MPNet-Standard & 64/128/256/512/768 & 0.751 & 1.044 (128) & 0.509 \\
+MPNet-MRL & 64/128/256/512/768 & 0.607 & 0.607 (64) & 0.576 \\
+Nomic-MRL & 64/128/256/512/768 & 0.470 & 0.788 (256) & 0.387 \\
+mxbai-MRL & 64/128/256/512/1024 & 1.062 & 1.062 (64) & 0.559 \\
+Qwen3-0.6B-MRL & 64/128/256/512/1024 & 1.042 & 1.143 (128) & 0.832 \\
+Qwen3-4B-MRL & 64/128/256/512/1024/2560 & 1.064 & 1.459 (512) & 1.175 \\
+\bottomrule
+\end{tabular}
+\end{table*}
 
-\subsection{Layer 3: Main contribution (RQ3)}
-$C_{var}(d)$ and $\alpha(d)$ reveal that several MRL models underexpress early-dimension bias variance despite geometric concentration evidence.
+\subsection{RQ2: WEAT significance tests}
+Permutation significance testing is implemented in the WEAT pipeline (\texttt{step3\_weat.py}; two-tailed permutation test, $N{=}10{,}000$ permutations). The frozen paper evidence currently preserves WEAT effect-size trajectories in JSON; significance values from WEAT runs should be reported in the final camera-ready table from archived run logs or a dedicated significance JSON export.
+
+\subsection{RQ3: Confidence-interval JSON evidence}
+Table~\ref{tab:cvar-ci} adds uncertainty-backed results using \texttt{cvar\_new/step13b\_cvar\_results\_with\_ci.json}. At $d{=}64$, geometric concentration and expressed variance already diverge across models, with bootstrap CIs quantifying uncertainty.
+
+\begin{table}[t]
+\caption{Bootstrap CI summary for $C_{var}(d)$ at the smallest prefix dimension ($d{=}64$) from frozen JSON (RQ3).}
+\label{tab:cvar-ci}
+\centering
+\begin{tabular}{lcc}
+\toprule
+Model & $C_{var}(64)$ & 95\% CI \\
+\midrule
+MPNet-Standard & 0.0769 & [0.0466, 0.1245] \\
+MPNet-MRL & 0.0699 & [0.0511, 0.0948] \\
+Nomic-MRL & 0.1079 & [0.0732, 0.1550] \\
+mxbai-MRL & 0.0648 & [0.0439, 0.0979] \\
+Qwen3-0.6B-MRL & 0.0808 & [0.0725, 0.0880] \\
+Qwen3-4B-MRL & 0.2263 & [0.1954, 0.2579] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{RQ4: Cross-model robustness via anisotropy}
+$\alpha(d)$ trends in Table~\ref{tab:alpha-summary} show robust cross-model divergence between geometric concentration and expressed variance. MPNet-Standard stays near isotropic, several MRL models show early underexpression ($\alpha<1$), and mxbai-MRL is closer to isotropic behavior.
 
 \begin{table}[t]
 \caption{Anisotropy summary from frozen artifact \texttt{step13d\_alpha\_results.json} (gender axis).}
